@@ -1,15 +1,12 @@
 import React from "react";
 
-import { View, Button } from "react-native";
-
+import { View, Text, Button, AsyncStorage } from "react-native";
 // import { Container } from './styles';
+import Header from "../../components/Header/index";
 
 const Repositories = props => (
   <View>
-    <Button
-      onPress={() => props.navigation.navigate("Welcome")}
-      title="Tela inicial"
-    />
+    <Header title="Repositorios" />
   </View>
 );
 
