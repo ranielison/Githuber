@@ -5,7 +5,7 @@ import {
   Text,
   StatusBar,
   TextInput,
-  AsyncStorage,
+  //AsyncStorage,
   TouchableOpacity,
   ActivityIndicator
 } from "react-native";
@@ -14,9 +14,9 @@ import styles from "./styles";
 import PropTypes from "prop-types";
 import api from "../../services/api";
 
-//import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-community/async-storage";
 export default class Welcome extends Component {
-  static PropTypes = {
+  static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func
     }).isRequired
@@ -34,8 +34,7 @@ export default class Welcome extends Component {
   };
 
   saveUser = async username => {
-    await AsyncStorage.setItem("@githuber:username");
-    console.log("salvou");
+    await AsyncStorage.setItem("@githuber:username", username);
   };
 
   signIn = async () => {
@@ -46,8 +45,8 @@ export default class Welcome extends Component {
 
     try {
       await this.checkUserExists(username);
-      //await this.saveUser(username);
-      navigation.navigate("Repositories");
+      await this.saveUser(username);
+      navigation.navigate("User");
     } catch (err) {
       this.setState({ loading: false, error: true });
     }

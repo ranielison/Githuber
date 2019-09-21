@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import createNavigation from "./routes";
+import createNavigator from "./routes";
+import { YellowBox } from "react-native";
 
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class App extends Component {
   state = {
@@ -19,10 +20,13 @@ export default class App extends Component {
 
   render() {
     const { userChecked, userLogged } = this.state;
-
+    YellowBox.ignoreWarnings([
+      "Warning: componentWillMount is deprecated",
+      "Warning: componentWillReceiveProps is deprecated"
+    ]);
     if (!userChecked) return null;
 
-    const Routes = createNavigation(userLogged);
+    const Routes = createNavigator(userLogged);
 
     return <Routes />;
   }

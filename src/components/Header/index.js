@@ -4,7 +4,7 @@ import {
   View,
   Text,
   StatusBar,
-  AsyncStorage,
+  //AsyncStorage,
   TouchableOpacity
 } from "react-native";
 
@@ -12,9 +12,9 @@ import styles from "./styles";
 import PropTypes from "prop-types";
 import { withNavigation } from "react-navigation";
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import AsyncStorage from "@react-native-community/async-storage";
 class Header extends Component {
-  static PropTypes = {
+  static propTypes = {
     title: PropTypes.string.isRequired,
     navigation: PropTypes.shape({
       navigate: PropTypes.func
