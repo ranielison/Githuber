@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 
-import { View, Text, Button, ActivityIndicator } from "react-native";
+import { View, Text, Button, FlatList, ActivityIndicator } from "react-native";
 
+import styles from "./styles";
 import PropTypes from "prop-types";
 import api from "../../services/api";
 import Header from "../../components/Header/index";
 import Icon from "react-native-vector-icons/FontAwesome/";
 import AsyncStorage from "@react-native-community/async-storage";
-import styles from "./styles";
+import RepositoryItem from "./RepositoryItem/index";
 
 const TabIcon = ({ tintColor }) => (
   <Icon name="list-alt" size={20} color={tintColor} />
@@ -24,21 +25,41 @@ export default class Repositories extends Component {
 
   state = {
     data: [],
-    loading: true
+    loading: true,
+    refreshing: false
   };
 
-  async componentDidMount() {
-    const username = await AsyncStorage.getItem("@githuber:username");
-    const { data } = await api.get(`/users/${username}/repos`);
-    this.setState({ data, loading: false });
+  componentDidMount() {
+    this.loadRepositories();
   }
 
-  renderList = () => <Text>Lista</Text>;
+  loadRepositories = async () => {
+    this.setState({ refreshing: true });
+    const username = await AsyncStorage.getItem("@githuber:username");
+    const { data } = await api.get(`/users/${username}/repos`);
+    this.setState({ data, loading: false, refreshing: false });
+  };
+
+  renderListItem = ({ item }) => <RepositoryItem repository={item} />;
+
+  renderList = () => {
+    const { data, refreshing } = this.state;
+
+    return (
+      <FlatList
+        data={data}
+        keyExtractor={item => String(item.id)}
+        renderItem={this.renderListItem}
+        onRefresh={this.loadRepositories}
+        refreshing={refreshing}
+      />
+    );
+  };
 
   render() {
     const { loading } = this.state;
     return (
-      <View>
+      <View style={styles.container}>
         <Header title="Repositorios" />
         {loading ? (
           <ActivityIndicator size="small" style={styles.loading} />
