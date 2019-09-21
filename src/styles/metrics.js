@@ -1,11 +1,11 @@
-import {Dimensions} from 'react-native';
+import { Dimensions } from "react-native";
 
-const {width, heigth} = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 export default {
   baseMargin: 10,
   basePadding: 20,
   baseRadius: 3,
-  screenWidth: width < heigth ? width : heigth,
-  screenHeigth: width < heigth ? heigth : width,
+  screenWidth: width < height ? width : height,
+  screenHeigth: width < height ? height : width
 };

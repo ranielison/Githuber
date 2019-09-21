@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { View, Text, Button, FlatList, ActivityIndicator } from "react-native";
+import { View, FlatList, ActivityIndicator } from "react-native";
 
 import styles from "./styles";
 import PropTypes from "prop-types";
